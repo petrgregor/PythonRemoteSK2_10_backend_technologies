@@ -6,3 +6,6 @@ Scripts/
 db.sqlite3
 manage.py
 pyvenv.cfg
+hollymovies/__pycache__/
+viewer/__pycache__/
+viewer/migrations/__pycache__/

@@ -6,6 +6,9 @@ from django.db.models import Model, CharField, ForeignKey, IntegerField, \
 class Genre(Model):
     name = CharField(max_length=16)
 
+    def __str__(self):
+        return self.name
+
 
 class Movie(Model):
     title = CharField(max_length=128)
@@ -14,3 +17,6 @@ class Movie(Model):
     released = DateField()
     description = TextField()
     created = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title + " (" + str(self.released) + ")"

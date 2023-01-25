@@ -19,7 +19,9 @@ from django.urls import path
 from viewer.views import *
 
 urlpatterns = [
+    path('', home, name='home'),
     path('admin/', admin.site.urls),
-    path('hello/<s>/', hello),
-    path('hello2/', hello2),
+    path('hello/<s>/', hello, name='hello'),
+    path('hello2/', hello2, name='hello2'),
+    path('movies/', movies, name='movies'),
 ]

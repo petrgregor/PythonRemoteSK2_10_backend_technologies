@@ -4,7 +4,6 @@
 Lib/
 Scripts/
 db.sqlite3
-manage.py
 pyvenv.cfg
 hollymovies/__pycache__/
 viewer/__pycache__/

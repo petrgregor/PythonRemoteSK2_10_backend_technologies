@@ -48,20 +48,20 @@ class Movie(Model):
     title_orig = CharField(max_length=64, null=False)
     title_cz = CharField(max_length=64, null=True)
     title_sk = CharField(max_length=64, null=True)
-    country = ForeignKey(Country, null=True, on_delete=SET_NULL)
-    genre = ForeignKey(Genre, null=True, on_delete=SET_NULL)
+    country = ManyToManyField(Country)
+    genre = ManyToManyField(Genre)
     released = DateField(null=False)
     #directors = ManyToManyField(Staff)
     #actors = ManyToManyField(Staff)
     length = PositiveIntegerField(null=True)
     description = TextField(null=True)
-    expanses = PositiveIntegerField(null=True)
-    earnings = PositiveIntegerField(null=True)
-    age_restriction = ForeignKey(AgeRestriction, null=True, on_delete=SET_NULL)
-    images = ManyToManyField(Image)
-    trailer = CharField(max_length=256, null=True)
-    price = DecimalField(max_digits=6, decimal_places=2, null=True)
-    link = CharField(max_length=256, null=True)
+    expanses = PositiveIntegerField(null=True, blank=True)
+    earnings = PositiveIntegerField(null=True, blank=True)
+    age_restriction = ForeignKey(AgeRestriction, null=True, blank=True, on_delete=SET_NULL)
+    images = ManyToManyField(Image, blank=True)
+    trailer = CharField(max_length=256, null=True, blank=True)
+    price = DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    link = CharField(max_length=256, null=True, blank=True)
     created = DateTimeField(auto_now_add=True)
     updated = DateTimeField(auto_now=True)
 
@@ -69,7 +69,7 @@ class Movie(Model):
         ordering = ['title_orig']
 
     def __str__(self):
-        return self.title + " (" + str(self.released) + ")"
+        return self.title_orig + " (" + str(self.released.year) + ")"
 
 
 class Rating(Model):
@@ -102,16 +102,16 @@ class Award(Model):
 
 
 class Staff(Model):
-    name = CharField(max_length=16, null=True)
-    surname = CharField(max_length=16, null=True)
-    artist_name = CharField(max_length=16, null=True)
+    name = CharField(max_length=16, null=True, blank=True)
+    surname = CharField(max_length=16, null=True, blank=True)
+    artist_name = CharField(max_length=16, null=True, blank=True)
     country = ForeignKey(Country, null=True, on_delete=SET_NULL)
-    date_of_birth = DateField(null=True)
-    death_date = DateField(null=True)
-    biography = TextField(null=True)
-    awards = ManyToManyField(Award)
-    directing = ManyToManyField(Movie, related_name='directing_movie')
-    acting = ManyToManyField(Movie, related_name='acting_in_movie')
+    date_of_birth = DateField(null=True, blank=True)
+    death_date = DateField(null=True, blank=True)
+    biography = TextField(null=True, blank=True)
+    awards = ManyToManyField(Award, blank=True)
+    directing = ManyToManyField(Movie, related_name='directing_movie', blank=True)
+    acting = ManyToManyField(Movie, related_name='acting_in_movie', blank=True)
     created = DateTimeField(auto_now_add=True)
     updated = DateTimeField(auto_now=True)
 
@@ -119,6 +119,11 @@ class Staff(Model):
         ordering = ['surname', 'artist_name', 'name']
 
     def __str__(self):
-        return self.name + " " + self.surname + " " + self.artist_name
-
-
+        result = ""
+        if self.name:
+            result += " " + self.name
+        if self.surname:
+            result += " " + self.surname
+        if self.artist_name:
+            result += " " + self.artist_name
+        return result

@@ -6,7 +6,7 @@
   <h1>List of movies</h1>
   <ul>
     {% for movie in movies %}
-      <li>{{ movie.title }}</li>
+      <li>{{ movie.title_orig }} ({{ movie.released.year }})</li>
     {% endfor %}
   </ul>
 {% endblock %}

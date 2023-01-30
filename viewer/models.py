@@ -40,7 +40,7 @@ class Image(Model):
     description = CharField(max_length=128, null=True)
 
     def __str__(self):
-        return self.description[:30]
+        return self.path[:15] + self.description[:30]
 
 
 
@@ -50,7 +50,7 @@ class Movie(Model):
     title_sk = CharField(max_length=64, null=True)
     country = ManyToManyField(Country)
     genre = ManyToManyField(Genre)
-    released = DateField(null=False)
+    released = IntegerField(null=False)
     #directors = ManyToManyField(Staff)
     #actors = ManyToManyField(Staff)
     length = PositiveIntegerField(null=True)
@@ -69,7 +69,7 @@ class Movie(Model):
         ordering = ['title_orig']
 
     def __str__(self):
-        return self.title_orig + " (" + str(self.released.year) + ")"
+        return self.title_orig + " (" + str(self.released) + ")"
 
 
 class Rating(Model):

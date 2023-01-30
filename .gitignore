@@ -2,7 +2,13 @@
 
 .idea/
 Lib/
-Scripts/
+Scripts/*.exe
+Scripts/*.bat
+Scripts/*.ps1
+Scripts/*.nu
+Scripts/*.fish
+Scripts/activate
+Scripts/activate_this.py
 db.sqlite3
 pyvenv.cfg
 hollymovies/__pycache__/

@@ -1,6 +1,7 @@
 from django.db import models
 from viewer.models import *
 import csv
+import time
 
 def run():
     with open('data/Movies.csv', encoding="UTF-8") as file:
@@ -77,6 +78,7 @@ def run():
                 movies_set = Movie.objects.filter(title_orig=row[0])
 
                 if not movies_set:
+                    time.sleep(1)
                     new_movie = Movie.objects.create(
                         title_orig=row[0],
                         title_cz=row[1],

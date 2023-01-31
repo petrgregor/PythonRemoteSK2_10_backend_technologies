@@ -44,7 +44,7 @@ def staff(request, pk):
     return render(request, 'staff.html', context)
 
 def actors(request):
-    staff_set = Staff.objects.all()  # TODO: vybrat pouze herce
+    staff_set = Staff.objects.all()
     actors = []
     for staff in staff_set:
         if Movie.objects.filter(acting_in_movie=staff).count() > 0:

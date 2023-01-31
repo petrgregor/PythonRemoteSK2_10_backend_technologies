@@ -23,5 +23,12 @@ def movies(request):
 
 def movie(request, pk):
     movie = Movie.objects.get(id=pk)
-    context = {'movie': movie}
+    countries = Country.objects.filter(movies=movie)
+    genres = Genre.objects.filter(movies=movie)
+    images = Image.objects.filter(movies=movie)
+    directors = Staff.objects.filter(directing=movie)
+    actors = Staff.objects.filter(acting=movie)
+    context = {'movie': movie, 'countries': countries,
+               'genres': genres, 'images': images,
+               'directors': directors, 'actors': actors}
     return render(request, 'movie.html', context)

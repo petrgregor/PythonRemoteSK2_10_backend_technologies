@@ -32,6 +32,7 @@ Hlavní funkce:
 - link na sociální sítě
 - API
 - Posgre databáze
+- upravit CSS
 
 Databáze:
 - Movie 

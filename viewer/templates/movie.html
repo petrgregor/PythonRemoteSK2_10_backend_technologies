@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ movie.title_orig }}{% endblock %}
+
+{% block content %}
+<div class="title_cz">CZ: {{ movie.title_cz }}</div>
+<div class="title_sk">SK: {{ movie.title_sk }}</div>
+<div class="title_orig">Original title: {{ movie.title_orig }}</div>
+<!-- TODO: country -->
+<div class="movie_country">Country: {{ movie.country }}</div>
+<!-- TODO: genre -->
+<div class="released">released: {{ movie.released }}</div>
+<div class="length">length: {{ movie.length }} min</div>
+<!-- TODO: directors -->
+<!-- TODO: actors -->
+<div class="description">description: {{ movie.description }}</div>
+<!-- TODO: expanses -->
+<!-- TODO: earnings -->
+<div class="age_restriction">Age restriction: {{ movie.age_restriction }}</div>
+<!-- TODO: images -->
+<div class="trailer">trailer: <a href="{{ movie.trailer }}">Trailer</a></div>
+<div class="price">price: {{ movie.price }}</div>
+<div class="link">link: <a href="{{ movie.link }}">link</a></div>
+<div class="movie_created">created: {{ movie.created }}</div>
+<div class="movie_updated">updated: {{ movie.updated }}</div>
+{% endblock %}

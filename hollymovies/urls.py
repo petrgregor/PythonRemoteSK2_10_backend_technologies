@@ -24,4 +24,5 @@ urlpatterns = [
     path('hello/<s>/', hello, name='hello'),
     path('hello2/', hello2, name='hello2'),
     path('movies/', movies, name='movies'),
+    path('movie/<pk>/', movie, name='movie'),
 ]

@@ -3,7 +3,7 @@
 Aplikace pro práci s filmovou databází.
 
 Hlavní funkce:
-- výpis všech filmů v databázi
+- ✓ výpis všech filmů v databázi
 - filtrování filmů dle žánru
 - filtrování filmů dle hodnocení
 - filtrování podle herce
@@ -31,6 +31,7 @@ Hlavní funkce:
 - podobné filmy (dle žánru a hodnocení)
 - link na sociální sítě
 - API
+- Posgre databáze
 
 Databáze:
 - Movie 

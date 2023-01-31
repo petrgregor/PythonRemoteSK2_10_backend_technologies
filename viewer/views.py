@@ -51,3 +51,22 @@ def actors(request):
             actors.append(staff)
     context = {'actors': actors}
     return render(request, 'actors.html', context)
+
+def search(request):
+    if request.method == 'POST':  # pokud jsme poslali dotaz z formuláře
+        search = request.POST.get('search')
+        search = search.strip()
+        if len(search) > 0:
+            movies_title_orig = Movie.objects.filter(title_orig__contains=search)
+            movies_title_cz = Movie.objects.filter(title_cz__contains=search)
+            movies_title_sk = Movie.objects.filter(title_sk__contains=search)
+            movies_descr = Movie.objects.filter(description__contains=search)
+            staff_names = Staff.objects.filter(name__contains=search)
+            staff_surnames = Staff.objects.filter(surname__contains=search)
+
+            context = {'search': search, 'movies_title_orig': movies_title_orig,
+                       'movies_title_cz': movies_title_cz, 'movies_title_sk': movies_title_sk,
+                       'movies_descr': movies_descr,
+                       'staff_names': staff_names, 'staff_surnames': staff_surnames}
+            return render(request, 'search.html', context)
+    return render(request, 'home.html')

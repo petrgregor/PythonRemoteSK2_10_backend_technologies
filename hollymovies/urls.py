@@ -27,4 +27,5 @@ urlpatterns = [
     path('movie/<pk>/', movie, name='movie'),
     path('staff/<pk>/', staff, name='staff'),
     path('actors/', actors, name='actors'),
+    path('search/', search, name='search'),
 ]

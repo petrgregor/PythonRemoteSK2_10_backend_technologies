@@ -10,6 +10,14 @@
 
 <h1>Hollymovies database</h1>
 
+<div id="search">
+    <form method="post" action="/search/">
+        {% csrf_token %}
+        <label for="search">Search:</label>
+        <input class="text" name="search">
+    </form>
+</div>
+
 {% include 'navbar.html' %}
 
 {% block content %} {% endblock %}

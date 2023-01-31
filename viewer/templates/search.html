@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Results for: {{ search }}{% endblock %}
+
+{% block content %}
+<h2>Results in original title</h2>
+<ul>
+  {% for movie in movies_title_orig %}
+    <li><a href="{% url 'movie' movie.id %}">{{ movie.title_orig }}</a></li>
+  {% endfor %}
+</ul>
+<h2>Results in czech  title</h2>
+<ul>
+  {% for movie in movies_title_cz %}
+    <li><a href="{% url 'movie' movie.id %}">{{ movie.title_cz }}</a></li>
+  {% endfor %}
+</ul>
+<h2>Results in slovak title</h2>
+<ul>
+  {% for movie in movies_title_sk %}
+    <li><a href="{% url 'movie' movie.id %}">{{ movie.title_sk }}</a></li>
+  {% endfor %}
+</ul>
+<h2>Results in movie description</h2>
+<ul>
+  {% for movie in movies_descr %}
+    <li><a href="{% url 'movie' movie.id %}">{{ movie.title_orig }}</a></li>
+  {% endfor %}
+</ul>
+<h2>Results in people name</h2>
+<ul>
+  {% for staff in staff_names %}
+    <li><a href="{% url 'staff' staff.id %}">{{ staff.name }} {{ staff.surname }}</a></li>
+  {% endfor %}
+</ul>
+<h2>Results in people surname</h2>
+<ul>
+  {% for staff in staff_surnames %}
+    <li><a href="{% url 'staff' staff.id %}">{{ staff.name }} {{ staff.surname }}</a></li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -6,10 +6,10 @@ Hlavní funkce:
 - ✓ výpis všech filmů v databázi
 - filtrování filmů dle žánru
 - filtrování filmů dle hodnocení
-- filtrování podle herce
-- filtrování podle režiséra
-- filtrování podle klíčového slova
-- vyhledávání
+- ✓ filtrování podle herce
+- ✓ filtrování podle režiséra
+- ✓ filtrování podle klíčového slova
+- ✓ vyhledávání
 - žebříčky (dle hodnocení filmu)
 - žebříčky uživatelů (nejaktivnější,...)
 - oblíbené filmy

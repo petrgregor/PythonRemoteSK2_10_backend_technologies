@@ -42,3 +42,12 @@ def staff(request, pk):
                'directing_movies': directing_movies,
                'acting_in_movies': acting_in_movies}
     return render(request, 'staff.html', context)
+
+def actors(request):
+    staff_set = Staff.objects.all()  # TODO: vybrat pouze herce
+    actors = []
+    for staff in staff_set:
+        if Movie.objects.filter(acting_in_movie=staff).count() > 0:
+            actors.append(staff)
+    context = {'actors': actors}
+    return render(request, 'actors.html', context)

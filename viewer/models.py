@@ -109,7 +109,7 @@ class Staff(Model):
     date_of_birth = DateField(null=True, blank=True)
     death_date = DateField(null=True, blank=True)
     biography = TextField(null=True, blank=True)
-    awards = ManyToManyField(Award, blank=True)
+    awards = ManyToManyField(Award, blank=True, related_name='staff')
     directing = ManyToManyField(Movie, related_name='directing_movie', blank=True)
     acting = ManyToManyField(Movie, related_name='acting_in_movie', blank=True)
     created = DateTimeField(auto_now_add=True)

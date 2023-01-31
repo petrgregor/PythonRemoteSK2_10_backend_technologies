@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ staff.name }} {{ staff.surname }}{% endblock %}
+
+{% block content %}
+<div class="staff_name_surname">
+  {% if staff.name %}
+    <span class="staff_name">{{ staff.name }}</span>
+  {% endif %}
+  {% if staff.surname %}
+    <span class="staff_surname">{{ staff.surname }}</span>
+  {% endif %}
+  {% if staff.artist_name %}
+    <span class="staff_artist_name">({{ staff.artist_name }})</span>
+  {% endif %}
+</div>
+<div class="staff_country">Country: {{ staff.country }}</div>
+<div class="date_of_birth">Date of birth: {{ staff.date_of_birth }}</div>
+{% if staff.death_date %}
+  <div class="death_date">Death date: {{ staff.death_date }}</div>
+{% endif %}
+<div class="biography">{{ staff.biography }}</div>
+<!-- TODO: Awards -->
+<div class="awards">
+  {% for award in awards %}
+    <div class="award">{{ award.name }}</div>
+  {% endfor %}
+</div>
+<div class="directing_movies">
+  {% if directing_movies %}
+    Directing:
+  {% endif %}
+  {% for directing_movie in directing_movies %}
+    <div class="directing_movie">{{ directing_movie.title_orig }}</div>
+  {% endfor %}
+</div>
+<div class="acting_in_movies">
+  {% if acting_in_movies %}
+    Acting:
+    {% for movie in acting_in_movies %}
+      <div class="acting_in_movie">{{ movie.title_orig }}</div>
+    {% endfor %}
+  {% endif %}
+</div>
+{% endblock %}

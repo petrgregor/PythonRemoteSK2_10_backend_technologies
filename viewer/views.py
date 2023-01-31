@@ -32,3 +32,13 @@ def movie(request, pk):
                'genres': genres, 'images': images,
                'directors': directors, 'actors': actors}
     return render(request, 'movie.html', context)
+
+def staff(request, pk):
+    staff = Staff.objects.get(id=pk)
+    awards = Award.objects.filter(staff=staff)
+    directing_movies = Movie.objects.filter(directing_movie=staff)
+    acting_in_movies = Movie.objects.filter(acting_in_movie=staff)
+    context = {'staff': staff, 'awards': awards,
+               'directing_movies': directing_movies,
+               'acting_in_movies': acting_in_movies}
+    return render(request, 'staff.html', context)

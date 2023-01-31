@@ -21,14 +21,14 @@
 <div class="directors">Directors:
     {% for director in directors %}
         <span class="director">
-            {{ director.name }} {{ director.surname }}
+            <a href="{% url 'staff' director.id %}">{{ director.name }} {{ director.surname }}</a>
         </span>
     {% endfor %}
 </div>
 <div class="actors">Actors:
     {% for actor in actors %}
         <span class="actor">
-            {{ actor.name }} {{ actor.surname }}
+            <a href="{% url 'staff' actor.id %}">{{ actor.name }} {{ actor.surname }}</a>
         </span>
     {% endfor %}
 </div>

@@ -16,8 +16,8 @@ Hlavní funkce:
 - poslední navštívené
 - novinky
 - výběr náhodného filmu
-- registrace a login uživatelů
-  - hodnocení filmů
+- ✓ registrace a login uživatelů
+  - ✓ hodnocení filmů
   - komentáře k filmům + editace
   - možnost vložit nový film
   - možnost editace filmu

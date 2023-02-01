@@ -83,7 +83,7 @@ class Rating(Model):
         ordering = ['movie', 'created']
 
     def __str__(self):
-        return self.movie.title_orig + " " + self.user.name + " " + self.rating
+        return self.movie.title_orig + " " + self.user.username + " " + str(self.rating)
 
 
 class Award(Model):

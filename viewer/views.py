@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from viewer.models import *
 
@@ -28,9 +28,21 @@ def movie(request, pk):
     images = Image.objects.filter(movies=movie)
     directors = Staff.objects.filter(directing=movie)
     actors = Staff.objects.filter(acting=movie)
+
+    # rating
+    avg_rating = None
+    if Rating.objects.filter(movie=movie).count() > 0:
+        avg_rating = Rating.objects.filter(movie=movie).aggregate(Avg('rating'))
+    # users rating
+    user = request.user
+    user_rating = None
+    if Rating.objects.filter(movie=movie, user=user).count() > 0:
+        user_rating = Rating.objects.get(movie=movie, user=user)
+
     context = {'movie': movie, 'countries': countries,
                'genres': genres, 'images': images,
-               'directors': directors, 'actors': actors}
+               'directors': directors, 'actors': actors,
+               'avg_rating': avg_rating, 'user_rating': user_rating}
     return render(request, 'movie.html', context)
 
 def staff(request, pk):
@@ -70,3 +82,22 @@ def search(request):
                        'staff_names': staff_names, 'staff_surnames': staff_surnames}
             return render(request, 'search.html', context)
     return render(request, 'home.html')
+
+def rate_movie(request):
+    user = request.user
+    if request.method == 'POST':
+        pk = request.POST.get('movie_id')
+        movie = Movie.objects.get(id=pk)
+        rating = request.POST.get('rating')
+
+        if Rating.objects.filter(movie=movie, user=user).count() > 0:
+            user_rating = Rating.objects.get(movie=movie, user=user)
+            user_rating.rating = rating
+            user_rating.save()
+        else:
+            Rating.objects.create(
+                movie=movie,
+                user=user,
+                rating=rating
+            )
+    return redirect(f"/movie/{pk}/")

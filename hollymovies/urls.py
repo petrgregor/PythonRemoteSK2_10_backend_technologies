@@ -30,6 +30,7 @@ urlpatterns = [
     path('staff/<pk>/', staff, name='staff'),
     path('actors/', actors, name='actors'),
     path('search/', search, name='search'),
+    path('rate_movie/', rate_movie, name='rate_movie'),
 
     # app accounts
     #path('accounts/', include('accounts.urls')),

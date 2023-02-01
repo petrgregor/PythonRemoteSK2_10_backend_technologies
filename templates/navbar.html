@@ -8,5 +8,10 @@
     <li><a href="{% url 'actors' %}">Actors</a></li>
     <li><a href="">Awards</a></li>
     <li><a href="">Community</a></li>
+    {% if request.user.is_authenticated %}
+      <li class="last-item">{{ request.user.username }} <a href="{% url 'logout' %}">Logout</a></li>
+    {% else %}
+      <li class="last-item"><a href="{% url 'login' %}">Login</a></li>
+    {% endif %}
   </ul>
 </nav>

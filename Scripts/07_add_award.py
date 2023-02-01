@@ -26,18 +26,24 @@ def run():
                           f"award_category: '{award_category}',"
                           f" award_year: '{award_year}'")
                     movie_name = re.search(f'(.*?) \(', award).group(1).strip()
+                    print(f"movie_name: '{movie_name}'")
                     movie = None
                     if movie_name:
-                        if Movie.objects.filter(title_orig=movie_name).count():
+                        if Movie.objects.filter(title_orig=movie_name).count() > 0:
                             movie = Movie.objects.get(title_orig=movie_name)
-                        elif Movie.objects.filter(title_cz=movie_name).count():
+                        elif Movie.objects.filter(title_cz=movie_name).count() > 0:
                             movie = Movie.objects.get(title_cz=movie_name)
-                        elif Movie.objects.filter(title_sk=movie_name).count():
+                        elif Movie.objects.filter(title_sk=movie_name).count() > 0:
                             movie = Movie.objects.get(title_sk=movie_name)
                     if movie:
-                        # TODO - zde pokračovat
-                        pass
+                        Award.objects.create(
+                            name=award_name,
+                            year=award_year,
+                            movie=movie,
+                            category=award_category
+                        )
+                        new_awards += 1
                 except:
-                    pass
+                    print("CHYBA")
 
     print(f"Konec skriptu '07_add_awards', bylo přidáno {new_awards} nových ocenění.")

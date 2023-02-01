@@ -5,6 +5,7 @@ import csv
 import time
 
 def run():
+    Staff.objects.all().delete()
     with open('data/Staff.csv', encoding="UTF-8") as file:
         reader = csv.reader(file, delimiter=';')  # otevřeme csv soubor
 
@@ -28,7 +29,6 @@ def run():
 
             staff_set = Staff.objects.filter(name=row[0],surname=row[1])
             if not staff_set:
-                time.sleep(1)
                 date_of_birth = datetime.strptime(row[4].strip(), '%d.%m.%Y').date()
                 #print(f"{row[4]} = {date_of_birth}")
                 death_date = None

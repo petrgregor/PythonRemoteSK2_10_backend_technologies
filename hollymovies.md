@@ -19,9 +19,9 @@ Hlavní funkce:
 - ✓ registrace a login uživatelů
   - ✓ hodnocení filmů
   - komentáře k filmům + editace
-  - možnost vložit nový film
-  - možnost editace filmu
-  - možnost mazání filmu
+  - ✓ možnost vložit nový film
+  - ✓ možnost editace filmu
+  - ✓ možnost mazání filmu
   - statistiky uživatelů (kolik hodnotili filmů, průměrné hodnocení,...)
   - (ne)viděl jsem
   - seznam, co chce uživatel vidět
@@ -33,6 +33,7 @@ Hlavní funkce:
 - API
 - Posgre databáze
 - upravit CSS
+- testování
 
 Databáze:
 - Movie 

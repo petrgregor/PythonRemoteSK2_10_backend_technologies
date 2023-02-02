@@ -64,6 +64,9 @@
     {% if user_rating %}
         Your rating is: {{ user_rating.rating }}
     {% endif %}
+
+    <a href="{% url 'update_movie' movie.id %}">update</a>
+    <a href="{% url 'delete_movie' movie.id %}">delete</a>
 {% endif %}
 
 {% endblock %}

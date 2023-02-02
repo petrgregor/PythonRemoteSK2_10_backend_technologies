@@ -2,8 +2,12 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from viewer.models import *
 from django.views import View
-from django.views.generic import TemplateView, ListView, FormView
+from django.views.generic import TemplateView, ListView, FormView, \
+    CreateView, UpdateView, DeleteView
 from django.forms import *
+from datetime import datetime
+from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 def home(request):
@@ -50,10 +54,16 @@ class MoviesView(ListView):
     model = Movie
 
 
+def capitalized_validator(value):
+  if value[0].islower():
+    raise ValidationError('Value must be capitalized.')
+
 def new_movie(request):
     return render(request, 'new_movie.html')
 
+"""
 def add_movie(request):
+    #capitalized_validator(request.POST.get('title_orig'))
     Movie.objects.create(
         title_orig=request.POST.get('title_orig'),
         title_cz=request.POST.get('title_cz'),
@@ -61,8 +71,10 @@ def add_movie(request):
         released=request.POST.get('released')
     )
     return render(request, 'movies.html')
+"""
 
-
+"""
+# Formulář pomocí třídy Form
 class MovieForm(Form):
     title_orig = CharField(max_length=64)
     title_cz = CharField(max_length=64)
@@ -71,10 +83,55 @@ class MovieForm(Form):
     released = IntegerField()
     description = CharField(widget=Textarea, required=False)
 
+    def clean_title_orig(self):
+        initial = super().clean()
+        initial = initial['title_orig']
+        #initial = self.cleaned_data['title_orig']
+        print(f"initial: {initial}, capitalize: {initial.capitalize()}")
+        return initial.capitalize()
 
+    def clean(self):
+        result = super().clean()
+        return result
+"""
+
+class MovieForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+    class Meta:
+        model = Movie
+        fields = '__all__'
+
+    released = IntegerField(min_value=1900, max_value=datetime.now().year)
+
+"""
+# with FormView
 class MovieCreateView(FormView):
   template_name = 'new_movie.html'
   form_class = MovieForm
+"""
+
+class MovieCreateView(LoginRequiredMixin, CreateView):
+  template_name = 'new_movie.html'
+  form_class = MovieForm
+  success_url = reverse_lazy('home')
+
+
+class MovieUpdateView(LoginRequiredMixin, UpdateView):
+  template_name = 'new_movie.html'
+  model = Movie
+  form_class = MovieForm
+  success_url = reverse_lazy('home')
+
+
+class MovieDeleteView(LoginRequiredMixin, DeleteView):
+    template_name = 'movie_confirm_delete.html'
+    model = Movie
+    success_url = reverse_lazy('home')
+
 
 def movie(request, pk):
     movie = Movie.objects.get(id=pk)

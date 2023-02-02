@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %}New movie{% endblock %}
+
+{% block content %}
+  <div class="new-movie-form">
+    <form method="post" action="add_movie/">
+      {% csrf_token %}
+<!--      <label for="title_orig">Original title:</label>
+      <input type="text" id="title_orig" name="title_orig"><br>
+      <label for="title_cz">Czech title:</label>
+      <input type="text" id="title_cz" name="title_cz"><br>
+      <label for="title_sk">Slovak title:</label>
+      <input type="text" id="title_sk" name="title_sk"><br>
+      <label for="released">Released:</label>
+      <input type="text" id="released" name="released"><br>-->
+      <table>{{ form }}</table>
+      <button type="submit">Save</button>
+    </form>
+  </div>
+{% endblock %}

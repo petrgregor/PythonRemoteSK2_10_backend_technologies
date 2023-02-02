@@ -1,6 +1,9 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from viewer.models import *
+from django.views import View
+from django.views.generic import TemplateView, ListView, FormView
+from django.forms import *
 
 # Create your views here.
 def home(request):
@@ -16,10 +19,62 @@ def hello2(request):
     s = request.GET.get('s', '')
     return HttpResponse(f"Hello, {s} world!")
 
+"""
+# již nepoužíváme, nahradili jsme pomocí MoviesView
 def movies(request):
     movies = Movie.objects.all()
     context = {'movies': movies}
     return render(request, 'movies.html', context)
+"""
+
+"""
+# version 1: with method
+class MoviesView(View):
+    def get(self, request):
+        movies = Movie.objects.all()
+        context = {'movies': movies}
+        return render(request, 'movies.html', context)
+"""
+
+"""
+# version 2: TemplateView
+class MoviesView(TemplateView):
+    template_name = 'movies.html'
+    movies = Movie.objects.all()
+    extra_context = {'movies': movies}
+"""
+
+# version 3: ListView
+class MoviesView(ListView):
+    template_name = 'movies.html'
+    model = Movie
+
+
+def new_movie(request):
+    return render(request, 'new_movie.html')
+
+def add_movie(request):
+    Movie.objects.create(
+        title_orig=request.POST.get('title_orig'),
+        title_cz=request.POST.get('title_cz'),
+        title_sk=request.POST.get('title_sk'),
+        released=request.POST.get('released')
+    )
+    return render(request, 'movies.html')
+
+
+class MovieForm(Form):
+    title_orig = CharField(max_length=64)
+    title_cz = CharField(max_length=64)
+    title_sk = CharField(max_length=64)
+    genre = ModelChoiceField(queryset=Genre.objects)
+    released = IntegerField()
+    description = CharField(widget=Textarea, required=False)
+
+
+class MovieCreateView(FormView):
+  template_name = 'new_movie.html'
+  form_class = MovieForm
 
 def movie(request, pk):
     movie = Movie.objects.get(id=pk)
@@ -36,8 +91,9 @@ def movie(request, pk):
     # users rating
     user = request.user
     user_rating = None
-    if Rating.objects.filter(movie=movie, user=user).count() > 0:
-        user_rating = Rating.objects.get(movie=movie, user=user)
+    if request.user.is_authenticated:
+        if Rating.objects.filter(movie=movie, user=user).count() > 0:
+            user_rating = Rating.objects.get(movie=movie, user=user)
 
     context = {'movie': movie, 'countries': countries,
                'genres': genres, 'images': images,

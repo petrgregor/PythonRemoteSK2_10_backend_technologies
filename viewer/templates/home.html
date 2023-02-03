@@ -4,6 +4,17 @@
 
 {% block content %}
 <h2>HOME</h2>
+
+{% if error_message %}
+<div class="error_message">{{ error_message }}</div>
+{% else %}
 <p>Welcome in our movie database.</p>
+{% endif %}
+<!-- komentář -->
+
+{% comment "ukázka použití komentáře v šabloně" %}
+Tento text je uvnitř zakomentovaného bloku, tedy se nezobrazí.
+{% endcomment %}
+
 {% endblock %}
 

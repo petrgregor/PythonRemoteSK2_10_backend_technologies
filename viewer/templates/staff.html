@@ -22,6 +22,7 @@
 <div class="biography">{{ staff.biography }}</div>
 <!-- TODO: Awards -->
 <div class="awards">
+  Number of awards: {{ staff.number_of_awards }}  <!-- TODO: opravit -->
   {% for award in awards %}
     <div class="award">{{ award.name }}</div>
   {% endfor %}

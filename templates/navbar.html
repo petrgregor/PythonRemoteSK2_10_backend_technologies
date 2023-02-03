@@ -4,7 +4,9 @@
   <ul>
     <li><a href="{% url 'home' %}">HOME</a></li>
     <li><a href="{% url 'movies' %}">Movies</a></li>
-    {% if request.user.is_authenticated %}
+    <li><a href="{% url 'filter_movies' %}">Filter movies</a></li>
+    {% comment %}{% if request.user.is_authenticated %}{% endcomment %}
+    {% if perms.viewer.add_movie %}
       <li><a href="{% url 'new_movie' %}">New movie</a></li>
     {% endif %}
     <li><a href="">News</a></li>

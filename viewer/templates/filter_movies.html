@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}List of movies{% endblock %}
+
+{% block content %}
+  <div class="movie_filter_form">
+    <form method="post" action="{% url 'filter_movies' %}">
+      {% csrf_token %}
+      <label for="genre">Genre:</label>
+      <!-- <input type="text" id="genre" name="genre"> -->
+      <select name="genre" id="genre">
+        <option value="nothing"> </option>
+        {% for genre in genres %}
+          {% if genre.name == selected_genre %}
+            <option value="{{ genre.name }}" selected>{{ genre.name }}</option>
+          {% else %}
+            <option value="{{ genre.name }}">{{ genre.name }}</option>
+          {% endif %}
+        {% endfor %}
+      </select>
+      <label for="rating">minimal rating:</label>
+      <input type="number" name="rating" id="rating" min="1" max="5" step="0.1" value="{{ min_rating }}">
+      <button type="submit">Filter</button>
+    </form>
+  </div>
+  <h1>List of movies</h1>
+  <!-- <div class="genre_name">{{ selected_genre }}</div> -->
+  <ul>
+    {% for movie in object_list %}
+      <li><a href="{% url 'movie' movie.id %}">{{ movie.title_orig }} ({{ movie.released }})</a></li>
+    {% endfor %}
+  </ul>
+{% endblock %}

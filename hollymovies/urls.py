@@ -26,6 +26,7 @@ urlpatterns = [
     path('hello/<s>/', hello, name='hello'),
     path('hello2/', hello2, name='hello2'),
     path('movies/', MoviesView.as_view(), name='movies'),
+    path('movies/filter_movies/', filter_movies, name='filter_movies'),
     path('movie/<pk>/', movie, name='movie'),
     path('new_movie/', MovieCreateView.as_view(), name='new_movie'),
     #path('new_movie/add_movie/', add_movie, name='add_movie'),

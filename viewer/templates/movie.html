@@ -3,7 +3,7 @@
 {% block title %}{{ movie.title_orig }}{% endblock %}
 
 {% block content %}
-<div class="title_cz">CZ: {{ movie.title_cz }}</div>
+<div class="title_cz">CZ: {{ movie.title_cz|upper }}</div>
 <div class="title_sk">SK: {{ movie.title_sk }}</div>
 <div class="title_orig">Original title: {{ movie.title_orig }}</div>
 <div class="movie_country">Country:
@@ -62,11 +62,14 @@
     </form>
 
     {% if user_rating %}
-        Your rating is: {{ user_rating.rating }}
+        Your rating is: {{ user_rating.rating }} <br>
     {% endif %}
 
-    <a href="{% url 'update_movie' movie.id %}">update</a>
-    <a href="{% url 'delete_movie' movie.id %}">delete</a>
+    {% if perms.viewer.change_movie %}
+        <a href="{% url 'update_movie' movie.id %}">update</a>
+    {% endif %}
+    {% if perms.viewer.delete_movie %}
+        <a href="{% url 'delete_movie' movie.id %}">delete</a>
+    {% endif %}
 {% endif %}
-
 {% endblock %}

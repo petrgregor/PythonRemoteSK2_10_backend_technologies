@@ -7,7 +7,7 @@ from django.views.generic import TemplateView, ListView, FormView, \
 from django.forms import *
 from datetime import datetime
 from django.urls import reverse_lazy
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 # Create your views here.
 def home(request):
@@ -54,12 +54,43 @@ class MoviesView(ListView):
     model = Movie
 
 
+def filter_movies(request):
+    # TODO: filtrovat i nehodnocené filmy (podle žánru)
+    movies = Movie.objects.all()
+    genres = Genre.objects.all()
+    genre_name = ""
+    context = {'genres': genres}
+    min_rating = 1
+    filtered_movies = []
+    if request.method == 'POST':
+        genre_name = request.POST.get('genre').strip()
+        if Genre.objects.filter(name=genre_name).count() > 0:
+            genre = Genre.objects.get(name=genre_name)
+            genre_name = genre.name
+            movies = Movie.objects.filter(genre=genre)
+        if request.POST.get('rating'):
+            min_rating = float(request.POST.get('rating'))
+            for movie in movies:
+                if Rating.objects.filter(movie=movie).count() > 0:
+                    if float(Rating.objects.filter(movie=movie).aggregate(Avg('rating'))['rating__avg']) >= min_rating:
+                        filtered_movies.append(movie)
+        else:
+            filtered_movies = movies
+        context = {'object_list': filtered_movies, 'genres': genres, 'selected_genre': genre_name,
+                   'min_rating': min_rating}
+
+    return render(request, 'filter_movies.html', context)
+
+
 def capitalized_validator(value):
   if value[0].islower():
     raise ValidationError('Value must be capitalized.')
 
+"""
+@permission_required
 def new_movie(request):
     return render(request, 'new_movie.html')
+"""
 
 """
 def add_movie(request):
@@ -114,49 +145,55 @@ class MovieCreateView(FormView):
   form_class = MovieForm
 """
 
-class MovieCreateView(LoginRequiredMixin, CreateView):
+class MovieCreateView(PermissionRequiredMixin, CreateView):
   template_name = 'new_movie.html'
   form_class = MovieForm
   success_url = reverse_lazy('home')
+  permission_required = 'viewer.add_movie'
 
 
-class MovieUpdateView(LoginRequiredMixin, UpdateView):
+class MovieUpdateView(PermissionRequiredMixin, UpdateView):
   template_name = 'new_movie.html'
   model = Movie
   form_class = MovieForm
   success_url = reverse_lazy('home')
+  permission_required = 'viewer.change_movie'
 
 
-class MovieDeleteView(LoginRequiredMixin, DeleteView):
+class MovieDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'movie_confirm_delete.html'
     model = Movie
     success_url = reverse_lazy('home')
+    permission_required = 'viewer.delete_movie'
 
 
 def movie(request, pk):
-    movie = Movie.objects.get(id=pk)
-    countries = Country.objects.filter(movies=movie)
-    genres = Genre.objects.filter(movies=movie)
-    images = Image.objects.filter(movies=movie)
-    directors = Staff.objects.filter(directing=movie)
-    actors = Staff.objects.filter(acting=movie)
+    try:
+        movie = Movie.objects.get(id=pk)
+        countries = Country.objects.filter(movies=movie)
+        genres = Genre.objects.filter(movies=movie)
+        images = Image.objects.filter(movies=movie)
+        directors = Staff.objects.filter(directing=movie)
+        actors = Staff.objects.filter(acting=movie)
 
-    # rating
-    avg_rating = None
-    if Rating.objects.filter(movie=movie).count() > 0:
-        avg_rating = Rating.objects.filter(movie=movie).aggregate(Avg('rating'))
-    # users rating
-    user = request.user
-    user_rating = None
-    if request.user.is_authenticated:
-        if Rating.objects.filter(movie=movie, user=user).count() > 0:
-            user_rating = Rating.objects.get(movie=movie, user=user)
+        # rating
+        avg_rating = None
+        if Rating.objects.filter(movie=movie).count() > 0:
+            avg_rating = Rating.objects.filter(movie=movie).aggregate(Avg('rating'))
+        # users rating
+        user = request.user
+        user_rating = None
+        if request.user.is_authenticated:
+            if Rating.objects.filter(movie=movie, user=user).count() > 0:
+                user_rating = Rating.objects.get(movie=movie, user=user)
 
-    context = {'movie': movie, 'countries': countries,
-               'genres': genres, 'images': images,
-               'directors': directors, 'actors': actors,
-               'avg_rating': avg_rating, 'user_rating': user_rating}
-    return render(request, 'movie.html', context)
+        context = {'movie': movie, 'countries': countries,
+                   'genres': genres, 'images': images,
+                   'directors': directors, 'actors': actors,
+                   'avg_rating': avg_rating, 'user_rating': user_rating}
+        return render(request, 'movie.html', context)
+    except:
+        return render(request, 'home.html', {'error_message': 'Movie not found'})
 
 def staff(request, pk):
     staff = Staff.objects.get(id=pk)

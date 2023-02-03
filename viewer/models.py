@@ -130,3 +130,7 @@ class Staff(Model):
         if self.artist_name:
             result += " " + self.artist_name
         return result
+
+    def number_of_awards(self):
+        return 25  # TODO opravit
+

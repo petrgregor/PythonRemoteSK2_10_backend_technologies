@@ -8,6 +8,7 @@ from django.forms import *
 from datetime import datetime
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+import random
 
 # Create your views here.
 def home(request):
@@ -170,6 +171,8 @@ class MovieDeleteView(PermissionRequiredMixin, DeleteView):
 def movie(request, pk):
     try:
         movie = Movie.objects.get(id=pk)
+        movie.last_visit = datetime.now()
+        movie.save()
         countries = Country.objects.filter(movies=movie)
         genres = Genre.objects.filter(movies=movie)
         images = Image.objects.filter(movies=movie)
@@ -251,3 +254,31 @@ def rate_movie(request):
                 rating=rating
             )
     return redirect(f"/movie/{pk}/")
+
+def movie_by_rating(request):
+    ratings = Rating.objects.all().values_list('movie').annotate(avg=Avg('rating'))
+    print(ratings)
+    average_ratings = {}
+    for rating in ratings:
+        movie = Movie.objects.filter(id=rating[0])
+        print(movie)
+        average_ratings[movie] = rating
+    print(average_ratings)
+    context = {'average_ratings': average_ratings}
+    return render(request, 'movies_by_rating.html', context)
+
+def last_visited_movies(request):
+    movies = Movie.objects.all().order_by('-last_visit')[:10]
+    context = {'movies': movies}
+    return render(request, 'last_visited_movies.html', context)
+
+def new_movies(request):
+    movies = Movie.objects.all().order_by('-created')[:10]
+    context = {'movies': movies}
+    return render(request, 'new_movies.html', context)
+
+def random_movie(request):
+    movies = Movie.objects.all()
+    movie = random.choice(movies)
+    context = {'movie': movie}
+    return render(request, 'movie.html', context)

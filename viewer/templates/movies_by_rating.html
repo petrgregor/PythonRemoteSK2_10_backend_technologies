@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}List of movies{% endblock %}
+
+{% block content %}
+  <h1>List of movies</h1>
+  <ul>
+    {% for average_rating in average_ratings %}
+      {{ average_rating }}
+      {% endfor %}
+  </ul>
+{% endblock %}

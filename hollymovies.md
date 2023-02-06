@@ -13,9 +13,9 @@ Hlavní funkce:
 - žebříčky (dle hodnocení filmu)
 - žebříčky uživatelů (nejaktivnější,...)
 - oblíbené filmy
-- poslední navštívené
-- novinky
-- výběr náhodného filmu
+- ✓ poslední navštívené
+- ✓ novinky
+- ✓ výběr náhodného filmu
 - ✓ registrace a login uživatelů
   - ✓ hodnocení filmů
   - komentáře k filmům + editace
@@ -30,7 +30,7 @@ Hlavní funkce:
 - predikce oblíbenosti filmu
 - podobné filmy (dle žánru a hodnocení)
 - link na sociální sítě
-- API
+- ✓ API
 - ✓ PostgreSQL databáze
 - upravit CSS
 - testování

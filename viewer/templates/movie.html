@@ -51,6 +51,7 @@
 <div class="link">link: <a href="{{ movie.link }}">link</a></div>
 <div class="movie_created">created: {{ movie.created }}</div>
 <div class="movie_updated">updated: {{ movie.updated }}</div>
+<div class="movie_last_visit">last visit: {{ movie.last_visit }}</div>
 <div class="avg_rating">Average rating: {{ avg_rating.rating__avg|floatformat:"2" }}</div>
 {% if request.user.is_authenticated %}
     <form action="{% url 'rate_movie' %}" method="post">

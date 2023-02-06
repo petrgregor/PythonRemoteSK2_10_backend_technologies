@@ -5,8 +5,8 @@
 {% block content %}
   <h1>List of movies</h1>
   <ul>
-    {% for average_rating in average_ratings %}
-      {{ average_rating }}
+    {% for movie in movies %}
+      <li><a href="{% url 'movie' movie.id %}"> {{ movie }} {{ movie.avg_rating|floatformat:"2" }}</a>
       {% endfor %}
   </ul>
 {% endblock %}

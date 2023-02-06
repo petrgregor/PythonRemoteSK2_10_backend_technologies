@@ -10,7 +10,7 @@ Hlavní funkce:
 - ✓ filtrování podle režiséra
 - ✓ filtrování podle klíčového slova
 - ✓ vyhledávání
-- žebříčky (dle hodnocení filmu)
+- ✓ žebříčky (dle hodnocení filmu)
 - žebříčky uživatelů (nejaktivnější,...)
 - oblíbené filmy
 - ✓ poslední navštívené

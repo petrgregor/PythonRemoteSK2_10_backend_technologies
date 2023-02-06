@@ -256,15 +256,8 @@ def rate_movie(request):
     return redirect(f"/movie/{pk}/")
 
 def movie_by_rating(request):
-    ratings = Rating.objects.all().values_list('movie').annotate(avg=Avg('rating'))
-    print(ratings)
-    average_ratings = {}
-    for rating in ratings:
-        movie = Movie.objects.filter(id=rating[0])
-        print(movie)
-        average_ratings[movie] = rating
-    print(average_ratings)
-    context = {'average_ratings': average_ratings}
+    movies = Movie.objects.annotate(avg_rating=Avg('movie_rating__rating')).filter(avg_rating__gte=1.0).order_by('-avg_rating')
+    context = {'movies': movies}
     return render(request, 'movies_by_rating.html', context)
 
 def last_visited_movies(request):

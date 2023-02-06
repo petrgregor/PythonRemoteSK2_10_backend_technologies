@@ -77,7 +77,7 @@ class Movie(Model):
 
 
 class Rating(Model):
-    movie = ForeignKey(Movie, null=False, on_delete=CASCADE)
+    movie = ForeignKey(Movie, null=False, on_delete=CASCADE, related_name='movie_rating')
     user = ForeignKey(User, null=True, on_delete=SET_NULL)
     rating = PositiveSmallIntegerField(null=False)
     created = DateTimeField(auto_now_add=True)

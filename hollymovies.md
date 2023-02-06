@@ -31,7 +31,7 @@ Hlavní funkce:
 - podobné filmy (dle žánru a hodnocení)
 - link na sociální sítě
 - API
-- Postgre databáze
+- ✓ PostgreSQL databáze
 - upravit CSS
 - testování
 

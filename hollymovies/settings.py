@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     # our applications
     'viewer',
     'accounts',
+    'api',
 ]
 
 MIDDLEWARE = [
@@ -86,6 +87,36 @@ DATABASES = {
     }
 }
 
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'hollymovies',
+        'USER': 'petrgregor',
+        'PASSWORD': 'mojeheslo',
+        'HOST': 'localhost',
+        'PORT': '5432',
+    }
+}
+"""
+
+"""
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'OPTIONS': {
+            'read_default_file': '/path/to/my.cnf',
+        },
+    }
+}
+
+# my.cnf
+[client]
+database = NAME
+user = USER
+password = PASSWORD
+default-character-set = utf8
+"""
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -131,3 +162,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Set redirect addresses after authentication
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

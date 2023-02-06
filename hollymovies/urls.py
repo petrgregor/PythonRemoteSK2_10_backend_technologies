@@ -13,11 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+import api.views
 from django.contrib import admin
 from django.urls import path, include
 
 from viewer.views import *
 from accounts.views import SignUpView
+
+from api.views import *
+
+from rest_framework import *
 
 urlpatterns = [
     # app viewer
@@ -41,4 +46,8 @@ urlpatterns = [
     #path('accounts/', include('accounts.urls')),
     path('accounts/signup/', SignUpView.as_view(), name='signup'),    # signup
     path('accounts/', include('django.contrib.auth.urls')),  # login, logout, password_change,...
+
+    # api
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('api/movies/', api.views.Movies.as_view({'get': 'list'})),
 ]

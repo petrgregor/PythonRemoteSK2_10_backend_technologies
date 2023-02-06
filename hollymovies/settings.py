@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_dump_load_utf8',
     'django_extensions',
+    'rest_framework',
+    'rest_framework.authtoken',
 
     # our applications
     'viewer',

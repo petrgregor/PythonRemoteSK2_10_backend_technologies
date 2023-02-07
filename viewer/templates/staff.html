@@ -43,4 +43,10 @@
     {% endfor %}
   {% endif %}
 </div>
+    {% if perms.viewer.change_staff %}                          <!-- Josef Krčmář -->
+        <a href="{% url 'update_staff' staff.id %}">update</a>  <!-- Josef Krčmář -->
+    {% endif %}                                                 <!-- Josef Krčmář -->
+    {% if perms.viewer.delete_staff %}                          <!-- Josef Krčmář -->
+        <a href="{% url 'delete_staff' staff.id %}">delete</a>  <!-- Josef Krčmář -->
+    {% endif %}                                                 <!-- Josef Krčmář -->
 {% endblock %}

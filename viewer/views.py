@@ -275,3 +275,43 @@ def random_movie(request):
     movie = random.choice(movies)
     context = {'movie': movie}
     return render(request, 'movie.html', context)
+
+
+# Josef Krčmář
+class StaffForm(ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'form-control'
+    class Meta:
+        model = Staff
+        fields = '__all__'
+
+    #released = IntegerField(min_value=1900, max_value=datetime.now().year)
+
+
+# Josef Krčmář
+class StaffCreateView(PermissionRequiredMixin, CreateView):
+  template_name = 'new_staff.html'
+  form_class = StaffForm
+  success_url = reverse_lazy('home')
+  permission_required = 'viewer.add_staff'
+
+
+# Josef Krčmář
+class StaffUpdateView(PermissionRequiredMixin, UpdateView):
+  template_name = 'new_staff.html'
+  model = Staff
+  form_class = StaffForm
+  success_url = reverse_lazy('home')
+  permission_required = 'viewer.change_staff'
+
+
+# Josef Krčmář
+class StaffDeleteView(PermissionRequiredMixin, DeleteView):
+    template_name = 'staff_confirm_delete.html'
+    model = Staff
+    success_url = reverse_lazy('home')
+    permission_required = 'viewer.delete_staff '
+

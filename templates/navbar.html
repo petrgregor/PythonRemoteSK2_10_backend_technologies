@@ -13,6 +13,9 @@
     {% if perms.viewer.add_movie %}
       <li><a href="{% url 'new_movie' %}">New movie</a></li>
     {% endif %}
+    {% if perms.viewer.add_staff %}                          <!-- Josef Krčmář -->
+      <li><a href="{% url 'new_staff' %}">New staff</a></li> <!-- Josef Krčmář -->
+    {% endif %}                                              <!-- Josef Krčmář -->
     <li><a href="">News</a></li>
     <li><a href="{% url 'actors' %}">Actors</a></li>
     <li><a href="">Awards</a></li>

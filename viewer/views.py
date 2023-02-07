@@ -256,7 +256,7 @@ def rate_movie(request):
     return redirect(f"/movie/{pk}/")
 
 def movie_by_rating(request):
-    movies = Movie.objects.annotate(avg_rating=Avg('movie_rating__rating')).filter(avg_rating__gte=1.0).order_by('-avg_rating')
+    movies = Movie.objects.annotate(avg_rating=Avg('movie_rating__rating')).filter(avg_rating__gte=1.0).order_by('-avg_rating')[:10]
     context = {'movies': movies}
     return render(request, 'movies_by_rating.html', context)
 

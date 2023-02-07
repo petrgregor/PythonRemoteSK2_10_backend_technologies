@@ -135,7 +135,27 @@ class MovieForm(ModelForm):
             visible.field.widget.attrs['class'] = 'form-control'
     class Meta:
         model = Movie
-        fields = '__all__'
+        #fields = '__all__'
+        exclude = ['last_visit']
+
+    def clean_title_orig(self):
+        cleaned_data = super().clean()
+        title_orig = cleaned_data.get('title_orig')
+        #if title_orig == None:
+        #    raise ValidationError("Title can not be empty.")
+        return title_orig
+
+    def clean_released(self):
+        cleaned_data = super().clean()
+        released = cleaned_data.get('released')
+        #if released < 1900 or released > 2023:
+        #    raise ValidationError("Invalid year")
+        return released
+
+    def clean(self):
+        cleaned_data = self.cleaned_data
+        print(cleaned_data)
+        return cleaned_data
 
     released = IntegerField(min_value=1900, max_value=datetime.now().year)
 

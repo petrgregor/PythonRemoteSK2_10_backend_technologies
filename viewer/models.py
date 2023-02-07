@@ -67,7 +67,7 @@ class Movie(Model):
     link = CharField(max_length=256, null=True, blank=True)
     created = DateTimeField(auto_now_add=True)
     updated = DateTimeField(auto_now=True)
-    last_visit = DateTimeField(null=True)
+    last_visit = DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ['title_orig']

@@ -210,10 +210,13 @@ def movie(request, pk):
             if Rating.objects.filter(movie=movie, user=user).count() > 0:
                 user_rating = Rating.objects.get(movie=movie, user=user)
 
+        comments = Comment.objects.filter(movie=movie)
+
         context = {'movie': movie, 'countries': countries,
                    'genres': genres, 'images': images,
                    'directors': directors, 'actors': actors,
-                   'avg_rating': avg_rating, 'user_rating': user_rating}
+                   'avg_rating': avg_rating, 'user_rating': user_rating,
+                   'comments': comments}
         return render(request, 'movie.html', context)
     except:
         return render(request, 'home.html', {'error_message': 'Movie not found'})
@@ -334,4 +337,49 @@ class StaffDeleteView(PermissionRequiredMixin, DeleteView):
     model = Staff
     success_url = reverse_lazy('home')
     permission_required = 'viewer.delete_staff '
+
+def add_comment(request):
+    if request.method == 'POST':
+        pk = request.POST.get('movie_id')
+        comment = request.POST.get('comment').strip()
+        if len(comment) > 0:
+            Comment.objects.create(
+                movie=Movie.objects.get(id=pk),
+                user=request.user,
+                comment=comment
+            )
+    return redirect(f"/movie/{pk}/")
+
+def edit_comment(request, pk):
+    comment = Comment.objects.get(id=pk)
+    if request.user == comment.user:
+        if request.method == 'POST':
+            comment_body = request.POST.get('comment').strip()
+            comment.comment = comment_body
+            comment.save()
+            return redirect(f"/movie/{comment.movie.id}/")
+
+        # else - tj. pokud ještě neposíláme data z formuláře
+        context = {'comment': comment}
+        return render(request, 'edit_comment.html', context)
+    return redirect(f"/movie/{comment.movie.id}/")
+
+def delete_comment(request, pk):
+    comment = Comment.objects.get(id=pk)
+    if request.user == comment.user:
+        if request.method == 'POST':
+            comment.delete()
+            return redirect(f"/movie/{comment.movie.id}/")
+
+        # else
+        context = {'comment': comment}
+        return render(request, 'comment_confirm_delete.html', context)
+    return redirect(f"/movie/{comment.movie.id}/")
+
+def users_activity(request):
+    user_ratings = User.objects.\
+        annotate(num_rating=Count('user_rating__rating'), avg_rating=Avg('user_rating__rating')).order_by('-num_rating')[:10]
+    user_comments = User.objects.annotate(num_comment=Count('user_comment__comment')).order_by('-num_comment')[:10]
+    context = {'user_ratings': user_ratings, 'user_comments': user_comments}
+    return render(request, 'users_activity.html', context)
 

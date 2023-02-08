@@ -78,7 +78,7 @@ class Movie(Model):
 
 class Rating(Model):
     movie = ForeignKey(Movie, null=False, on_delete=CASCADE, related_name='movie_rating')
-    user = ForeignKey(User, null=True, on_delete=SET_NULL)
+    user = ForeignKey(User, null=True, on_delete=SET_NULL, related_name='user_rating')
     rating = PositiveSmallIntegerField(null=False)
     created = DateTimeField(auto_now_add=True)
     updated = DateTimeField(auto_now=True)
@@ -88,6 +88,20 @@ class Rating(Model):
 
     def __str__(self):
         return self.movie.title_orig + " " + self.user.username + " " + str(self.rating)
+
+
+class Comment(Model):
+    movie = ForeignKey(Movie, null=False, on_delete=CASCADE, related_name='movie_comment')
+    user = ForeignKey(User, null=False, on_delete=CASCADE, related_name='user_comment')
+    comment = TextField(null=False)
+    created = DateTimeField(auto_now_add=True)
+    updated = DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['movie', '-created', 'user']
+
+    def __str__(self):
+        return self.movie.title_orig + " (" + self.user.username + "): " + self.comment
 
 
 class Award(Model):

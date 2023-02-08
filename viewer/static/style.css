@@ -2,15 +2,26 @@ body {
     background-color: lightgreen;
 }
 
+nav {
+    width: 180px;
+    height: 800px;
+    background-color: #ccffcc;
+    float: left;
+}
+
 nav ul {
     list-style: none;
 }
 
-nav li {
+nava li {
     display: inline-block;
 }
 
-.last-item {
+.last-itema {
     float: right;
     margin-right: 40px;
+}
+
+.main_content {
+
 }

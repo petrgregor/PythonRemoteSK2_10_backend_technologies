@@ -11,18 +11,18 @@ Hlavní funkce:
 - ✓ filtrování podle klíčového slova
 - ✓ vyhledávání
 - ✓ žebříčky (dle hodnocení filmu)
-- žebříčky uživatelů (nejaktivnější,...)
+- ✓ žebříčky uživatelů (nejaktivnější,...)
 - oblíbené filmy
 - ✓ poslední navštívené
 - ✓ novinky
 - ✓ výběr náhodného filmu
 - ✓ registrace a login uživatelů
   - ✓ hodnocení filmů
-  - komentáře k filmům + editace
+  - ✓ komentáře k filmům + editace + mazání
   - ✓ možnost vložit nový film
   - ✓ možnost editace filmu
   - ✓ možnost mazání filmu
-  - statistiky uživatelů (kolik hodnotili filmů, průměrné hodnocení,...)
+  - ✓ statistiky uživatelů (kolik hodnotili filmů, průměrné hodnocení,...)
   - (ne)viděl jsem
   - seznam, co chce uživatel vidět
   - zpráva adminovi (chat)

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}Users activities{% endblock %}
+
+{% block content %}
+  <h2>Top 10 most rating users:</h2>
+    <ul>
+      {% for user_rating in user_ratings %}
+        <li>User {{ user_rating.username }} rated {{ user_rating.num_rating }} movies
+          with {{ user_rating.avg_rating }} average rating</li>
+      {% endfor %}
+    </ul>
+  <h2>Top 10 most commenting users:</h2>
+    <ul>
+      {% for user_comment in user_comments %}
+        <li>{{ user_comment.username }}: {{ user_comment.num_comment }}</li>
+      {% endfor %}
+    </ul>
+{% endblock %}

@@ -72,5 +72,33 @@
     {% if perms.viewer.delete_movie %}
         <a href="{% url 'delete_movie' movie.id %}">delete</a>
     {% endif %}
+
+    <form action="{% url 'add_comment' %}" method="post">
+        {% csrf_token %}
+        <label for="comment">Your comment:</label>
+        <textarea id="id_comment" name="comment" required rows="6" cols="50" maxlength="500"></textarea>
+        <input type="hidden"  name="movie_id" value="{{ movie.id }}">
+        <input type="submit">
+    </form>
+
+    <div class="comments">
+        {% for comment in comments %}
+            <div class="comment">
+                <div class="author_of_comment">
+                    {{ comment.user }}
+                </div>
+                {% if request.user == comment.user %}
+                    <a href="{% url 'edit_comment' comment.id %}">edituj</a>
+                    <a href="{% url 'delete_comment' comment.id %}">smaž</a>
+                {% endif %}
+                <div class="comment_time">
+                    {{ comment.updated }}
+                </div>
+                <div class="comment_body">
+                    {{ comment.comment }}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endif %}
 {% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Comment edit{% endblock %}
+
+{% block content %}
+    <form action="{% url 'edit_comment' comment.id %}" method="post">
+        {% csrf_token %}
+        <label for="comment">Your comment:</label>
+        <textarea id="id_comment" name="comment" required rows="6" cols="50" maxlength="500">
+            {{ comment.comment }}
+        </textarea>
+        <input type="hidden"  name="movie_id" value="{{ movie.id }}">
+        <input type="submit">
+    </form>
+{% endblock %}

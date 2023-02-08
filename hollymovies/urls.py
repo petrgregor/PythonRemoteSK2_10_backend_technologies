@@ -48,6 +48,10 @@ urlpatterns = [
     path('actors/', actors, name='actors'),
     path('search/', search, name='search'),
     path('rate_movie/', rate_movie, name='rate_movie'),
+    path('add_comment/', add_comment, name='add_comment'),
+    path('edit_comment/<pk>/', edit_comment, name='edit_comment'),
+    path('delete_comment/<pk>/', delete_comment, name='delete_comment'),
+    path('users_activity/', users_activity, name='users_activity'),
 
     # app accounts
     #path('accounts/', include('accounts.urls')),

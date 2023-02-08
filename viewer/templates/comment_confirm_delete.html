@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete comment{% endblock %}
+
+{% block content %}
+  <form method="post">
+    {% csrf_token %}
+    <p>
+      Are you sure you want to delete comment "{{ comment.comment }}" from database?
+    </p>
+    <input type="submit" value="Submit" class="btn btn-danger">
+  </form>
+
+{% endblock %}

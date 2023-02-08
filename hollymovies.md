@@ -33,7 +33,7 @@ Hlavní funkce:
 - ✓ API
 - ✓ PostgreSQL databáze
 - upravit CSS
-- testování
+- ✓ testování
 
 Databáze:
 - Movie 
